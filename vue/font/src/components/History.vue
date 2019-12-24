@@ -9,9 +9,9 @@
     <b-row class="row-input-date">
         
         <h4 class="h4-datebefore">วันที่   </h4>
-        <datetime class="inputdate-before" v-model="dateBefore"></datetime>
+        <datepicker class="inputdate-before" v-model="dateBefore"></datepicker>
         <h4 class="h4-datenoe">  ถึงวันที่   </h4>
-        <datetime class="inputdate-now" v-model="datenow"></datetime>
+        <datepicker class="inputdate-now" v-model="datenow"></datepicker>
         <b-button class="button-date" variant="info" @click="loadHistory()">ตกลง</b-button>
          
     </b-row>
@@ -25,14 +25,20 @@
     {{dateBefore}}
     {{datenow}}
     {{chartdata}} -->
+    
 </b-container>
 </div>
 </div>
 </template>
 <script>
 import axios from 'axios'
+import Datepicker from 'vuejs-datepicker';
+
 
 export default {
+    components: {
+    Datepicker
+  },
     
     data(){
         return {
@@ -46,7 +52,10 @@ export default {
             nulldata:{},
             datenow : null,//"2019-12-23 15:02:39",
 	        dateBefore: null,//"2019-12-23 12:41:50",
-            idnode:this.$store.state.node_id
+            idnode:this.$store.state.node_id,
+            data_raw:[],
+            val_raw:[], 
+            id_node:{}
         }
     },
     methods:{
@@ -88,21 +97,22 @@ export default {
               })
               .then(response => {
                   if(response.data.success == "success"){
-                          let data_raw = []
-                          let val_raw  = [] 
-                          let id_node  = {} 
+                          this.data_raw = []
+                          this.val_raw  = []
+                          this.id_node  = {} 
+                          this.chartdata = []
                       for(let i = 0; i < response.data.message.length; i++){
-                          data_raw.push(response.data.message[i].timestamp)
-                          id_node['name'] = "node : "+response.data.message[i].node_name
+                          this.data_raw.push(response.data.message[i].timestamp)
+                          this.id_node['name'] = "node : "+response.data.message[i].node_name
                       }
                       for(let j = 0; j < response.data.message.length; j++){
-                          val_raw.push(response.data.message[j].sensor)
+                          this.val_raw.push(response.data.message[j].sensor)
                       }
-                      for (let k = 0;  k < data_raw.length; k++) {     
-                          this.nulldata[data_raw[k]] = val_raw[k]      
+                      for (let k = 0;  k < this.data_raw.length; k++) {     
+                          this.nulldata[this.data_raw[k]] = this.val_raw[k]      
                       }
-                      id_node['data'] = this.nulldata
-                      this.chartdata.push(id_node)
+                      this.id_node['data'] = this.nulldata
+                      this.chartdata.push(this.id_node)
                       /* eslint-disable no-console */
                         console.log(this.chartdata)
                       /* eslint-enable no-console */
@@ -112,9 +122,6 @@ export default {
             
         }
 
-    },
-    mounted(){
-        //this.loadHistory();
     }
 }
 </script>
@@ -149,8 +156,9 @@ div.vdatetime.inputdate-now{
     margin-right: 3%;
 }
 
-.button-date{
+button.btn.button-date{
     margin-top: -0.5%;
+    margin-left: 3%;
 }
 
 .hostory-page{

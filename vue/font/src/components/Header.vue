@@ -2,7 +2,7 @@
 
   <b-navbar toggleable="lg" type="dark" variant="info">
     <b-container>
-    <b-navbar-brand href="./first.vue">WEST ENERGY</b-navbar-brand>
+    <b-navbar-brand href="./first.vue">WASTE ENERGY</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

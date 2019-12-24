@@ -31,7 +31,7 @@ export default {
 }
 
 .background-first{
-    background-image: url('./../img/4982.jpg');
+    background-image: url('./../img/645469-POPYUA-363.jpg');
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;

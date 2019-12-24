@@ -244,10 +244,10 @@ h6{
 }
 
 .h2-gateway-tricker{
-  color: aliceblue;
+  color: #070606;
   padding-bottom: 40px; 
-  padding-top: -15px;
-  margin-top: -13px;
+  padding-top: -10px;
+  margin-top: -5%;
 }
 
 .modal-dialog-scrollable .modal-body{
