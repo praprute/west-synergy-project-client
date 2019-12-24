@@ -35,10 +35,10 @@
      <b-modal 
      v-model="show"
      id="modal-scrollable" centered
-     scrollable title="Scrollable Content">
+     scrollable title="Node">
     
         <b-row class="row_show_node" v-for="(item, index) in idnode_index" :key="index">
-        <b-col>
+        <b-col cols="6">
         {{idgateway}} :
          <br/>
         {{gatewayname}} :
@@ -52,10 +52,8 @@
         {{status_node}} :
          <br/>
         {{place_node}} :
-         <br/>
-         <br/>
           </b-col>
-          <b-col>
+          <b-col cols="6">
         {{idgateway_index[index]}}
          <br/>
         {{gatewayname_index[index]}}
@@ -69,48 +67,17 @@
         {{status_node_index[index]}}
          <br/>
         {{place_node_index[index]}}
-        <b-row class="history_link" >
-          <b-button class="historbutton" @click="lookhistory(),saveidnode(item)"><h6>History node {{idnode_index[index]}}</h6></b-button>
+        </b-col>
+         <b-col cols="12" class="col-button">
+          <b-button class="historbutton" block variant="info"  @click="lookhistory(),saveidnode(item)"><h6> History node {{idnode_index[index]}}</h6></b-button>
+        </b-col>
         </b-row>
-         <br/>
-         <br/>
-          </b-col>
-        </b-row>
-      
-
-      
-          <!-- <table>
-            <tr class="trpage">
-              <td width="60%">{{idgateway}}</td>
-              <td>{{idgateway_index[index]}}</td>
-            </tr>
-            <tr class="trpage">
-              <td>{{gatewayname}}</td>
-              <td>{{gatewayname_index[index]}}</td>
-            </tr>
-            <tr class="trpage">
-              <td>{{place_gateway}}</td>
-              <td>{{place_gateway_index[index]}}</td>
-            </tr>
-            <tr class="trpage">
-              <td>{{idnode}}</td>
-              <td>{{idnode_index[index]}}</td>
-            </tr>
-            <tr class="trpage">
-              <td>{{sensor}}</td>
-              <td>{{sensor_index[index]}}</td>
-            </tr>
-            <tr class="trpage">
-              <td>{{status_node}}</td>
-              <td>{{status_node_index[index]}}</td>
-            </tr>
-            <tr class="trpage">
-              <td>{{place_node}}</td>
-              <td>{{place_node_index[index]}}</td>
-            </tr>
-          </table> -->
-
-          <br/>
+          <template v-slot:modal-footer="{ ok, cancel, hide }">
+            <!-- Emulate built in modal footer ok and cancel button actions -->
+            <b-button size="md" variant="info" @click="ok()">
+            ตกลง
+            </b-button>
+          </template>
         
       
       </b-modal>
@@ -121,6 +88,7 @@
 
 <script>
 import axios from "axios";
+//icon = "https://img.icons8.com/ultraviolet/40/000000/marker.png"
 
 export default {
      name: "GoogleMap",
@@ -133,6 +101,7 @@ export default {
       places: [],
       data_test:null,
       currentPlace: null,
+      //pin: URL('./../img/gps.png'),
 
 
       idgateway:"Id of gateway",
@@ -159,8 +128,8 @@ export default {
     this.geolocate();
   },methods:{
     saveidnode(item){
-      this.$store.state.idnode = [];
-      this.$store.state.idnode.push(item)
+      this.$store.state.node_id = "";
+      this.$store.state.node_id = item;
     },
     lookhistory(){
       this.$router.push("/history");
@@ -258,7 +227,7 @@ export default {
 <style lang="css" >
 
 .historbutton{
-  margin-bottom: -5%;
+  margin-bottom: -17%;
   margin-top: 5%;
   text-align: center;
   padding-top: 2%;
@@ -277,7 +246,35 @@ h6{
 .h2-gateway-tricker{
   color: aliceblue;
   padding-bottom: 40px; 
-  padding-top: -20px;
+  padding-top: -15px;
+  margin-top: -13px;
+}
+
+.modal-dialog-scrollable .modal-body{
+  padding-bottom: 0%;
+}
+
+/* .row_show_node{
+  border-bottom: solid 1px #0000;
+} */
+
+/* .row.history_link{
+  width: 100%;
+  margin:0%;
+  padding: 0%;
+
+} */
+
+div.col-button.col-12{
+  padding: 5%
+}
+
+button.btn.historbutton{
+  margin: auto;
+}
+
+div.row.row_show_node{
+  margin-bottom: 0;
 }
 
 </style>

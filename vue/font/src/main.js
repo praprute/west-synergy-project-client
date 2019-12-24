@@ -8,6 +8,8 @@ import Header from './components/Header'
 import * as VueGoogleMaps from "vue2-google-maps";
 import Chart from 'chart.js'
 import Chartkick from 'vue-chartkick'
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 
 import {
   routes
@@ -18,6 +20,7 @@ import {
 
 Vue.config.productionTip = false
 
+Vue.use(Datetime)
 Vue.use(Chartkick.use(Chart))
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
@@ -28,6 +31,7 @@ Vue.use(VueGoogleMaps, {
   }
 });
 
+Vue.component('datetime', Datetime);
 Vue.component('header-navbar', Header)
 
 const router = new VueRouter({

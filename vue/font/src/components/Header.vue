@@ -9,7 +9,7 @@
     <b-collapse id="nav-collapse" is-nav >
       <b-navbar-nav class="ml-auto">
         <b-nav-item href="#">Realtime</b-nav-item>
-        <b-nav-item @click="lookhistory()" href="#">History</b-nav-item>
+        <b-nav-item href="#">History</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
     </b-container>
@@ -25,9 +25,9 @@ export default {
       };
     },
     methods:{
-      lookhistory(){
-        this.$router.push("/history")
-      }
+      // lookhistory(){
+      //   this.$router.push("/history")
+      // }
     }
 }
 </script>
