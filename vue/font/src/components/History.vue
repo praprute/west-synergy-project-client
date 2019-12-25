@@ -13,13 +13,14 @@
         <h4 class="h4-datenoe">  ถึงวันที่   </h4>
         <datepicker class="inputdate-now" v-model="datenow"></datepicker>
         <b-button class="button-date" variant="info" @click="loadHistory()">ตกลง</b-button>
+        
          
     </b-row>
 
 </div>
-    <line-chart 
+    <area-chart
     :data = chartdata>
-    </line-chart>
+    </area-chart>
 
     <!-- {{idnode}}
     {{dateBefore}}
@@ -59,6 +60,21 @@ export default {
         }
     },
     methods:{
+        ClearHistory(){
+            //  this.data_raw = []
+            //  this.val_raw  = []
+            //  this.id_node  = {} 
+            //  this.chartdata = []
+            //  this.datenow = null
+            //  this.dateBefore = null
+             //this.nulldata = []
+
+             this.data_raw.splice(0,1)
+             this.val_raw.splice(0,1)
+             this.id_node  = {}
+             this.chartdata.splice(0,1)
+             this.nulldata.splice(0,1)
+        },
         test(){
             // let data_raw = ['2017-01-01 00:00:00 -0800', '2017-01-02 00:00:00 -0800' , '2017-01-03 00:00:00 -0800']
             // let val_raw = [3,4,5]
@@ -97,17 +113,22 @@ export default {
               })
               .then(response => {
                   if(response.data.success == "success"){
-                          this.data_raw = []
-                          this.val_raw  = []
-                          this.id_node  = {} 
+                          this.data_raw =[]
+                          this.val_raw = []
+                          this.id_node  = {}
                           this.chartdata = []
+                          this.nulldata  = {}
                       for(let i = 0; i < response.data.message.length; i++){
                           this.data_raw.push(response.data.message[i].timestamp)
                           this.id_node['name'] = "node : "+response.data.message[i].node_name
+
+
+                          this.val_raw.push(response.data.message[i].sensor)//test
                       }
-                      for(let j = 0; j < response.data.message.length; j++){
-                          this.val_raw.push(response.data.message[j].sensor)
-                      }
+                    //   for(let j = 0; j < response.data.message.length; j++){
+                    //       this.val_raw.push(response.data.message[j].sensor)
+                    //   }
+
                       for (let k = 0;  k < this.data_raw.length; k++) {     
                           this.nulldata[this.data_raw[k]] = this.val_raw[k]      
                       }
