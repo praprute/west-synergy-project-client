@@ -40,6 +40,8 @@ void setup()
 
 int sensor;
 
+// function อ่าน sensor ------------------------------------------------------------------------
+
 int us42(){
   Wire.beginTransmission(112);
   Wire.write(byte(81));
@@ -50,13 +52,12 @@ int us42(){
     int reading = Wire.read();
     reading = reading << 8;
     reading |= Wire.read();
-//    Serial.print("sensorxxxx : ");
-//    Serial.println(reading);
-     
     return reading;
   }
  
 }
+
+// function อ่าน หาค่าเฉลี่ยในการอ่าน sensor ------------------------------------------------------------------------
 
 int maSensor(){
   int count = 10;
@@ -64,6 +65,9 @@ int maSensor(){
   for(int i ; i <= count ; i++){
     sum += us42();
   }
+
+
+// function ปรับอัตราส่วนการส่งค่า sensor  ------------------------------------------------------------------------
 
   int val = sum/count;
   if(val != 0){
@@ -97,6 +101,8 @@ void loop()
 
       //char id = ((char)buf[1]);
 
+      //ถอด String id จาก sever ที่ส่งมา 
+      
       String id = char2String((char)buf[0]) + char2String((char)buf[1]);
       Serial.println(id);
       
