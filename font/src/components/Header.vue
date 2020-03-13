@@ -2,7 +2,7 @@
 
   <b-navbar toggleable="lg" type="dark" variant="info">
     <b-container>
-    <b-navbar-brand href="./first.vue">WASTE SYNERGY</b-navbar-brand>
+    <b-navbar-brand  href="/">WASTE SYNERGY</b-navbar-brand>
     </b-container>
   </b-navbar>
   
@@ -19,6 +19,9 @@ export default {
       // lookhistory(){
       //   this.$router.push("/history")
       // }
+       firstpage(){
+         this.$router.push("/")
+    }
     }
 
 
@@ -42,3 +45,5 @@ a.nav-link{
 
 </style>
 
+
+128.199.161.aaaaa137

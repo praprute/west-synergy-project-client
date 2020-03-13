@@ -56,7 +56,7 @@ while True:
 # -------------------------Send Request to api------------------------------------------------------#
             
             headers = {'Content-type': 'application/json'}
-            r = requests.post("http://192.168.1.62:3020/sensor",
+            r = requests.post("${API}/sensor",
                           data=json_data, headers=headers)
             
             print(r.json())

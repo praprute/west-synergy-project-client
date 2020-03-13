@@ -29,7 +29,9 @@ unsigned long interval = 5000;
 
 void setup()
 {
+  
   Serial.begin(9600);
+  
   while (!Serial)
     ; // wait for serial port to connect. Needed for Leonardo only
   if (!nrf24.init())
@@ -50,9 +52,10 @@ void loop()
 //    id_sensor = "A1";
 //  }
 
- if(Serial.available() != ""){
-    id_sensor = Serial.readString();
- }
+
+// if(Serial.available() != ""){
+//    id_sensor = Serial.readString();
+// }
   
   //Serial.println("Sending to node");
   // Send a message to nrf24_server
@@ -84,8 +87,11 @@ void loop()
   //   itoa(x, stringValue, 10);//convert integer to ASCII string, number base 10
   
   //String id = "A1"; ---------------------
-  
-  char tt_char[id_sensor.length()+1];
+
+if(Serial.available()){
+    id_sensor = "A1";
+    //id_sensor = Serial.readString();
+    char tt_char[id_sensor.length()+1];
 
   id_sensor.toCharArray(tt_char, id_sensor.length()+1);
   nrf24.send(tt_char, sizeof(tt_char));  //use strlen() to determine C-string length
@@ -113,7 +119,9 @@ void loop()
   }
   else
   {
-    //Serial.println("No reply, is nrf24_server running?");
+//    Serial.println("No reply, is nrf24_server running?");
   }
+}
   delay(400);
+  
 }

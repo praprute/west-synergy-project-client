@@ -42,35 +42,35 @@ int sensor;
 
 // function อ่าน sensor ------------------------------------------------------------------------
 
-int us42(){
+int us42() {
   Wire.beginTransmission(112);
   Wire.write(byte(81));
   Wire.endTransmission();
   delay(70);
   Wire.requestFrom(112, 2);
-   if (2 <= Wire.available()) {
+  if (2 <= Wire.available()) {
     int reading = Wire.read();
     reading = reading << 8;
     reading |= Wire.read();
     return reading;
   }
- 
+
 }
 
 // function อ่าน หาค่าเฉลี่ยในการอ่าน sensor ------------------------------------------------------------------------
 
-int maSensor(){
+int maSensor() {
   int count = 10;
   int sum = 0;
-  for(int i ; i <= count ; i++){
+  for (int i ; i <= count ; i++) {
     sum += us42();
   }
 
 
-// function ปรับอัตราส่วนการส่งค่า sensor  ------------------------------------------------------------------------
+  // function ปรับอัตราส่วนการส่งค่า sensor  ------------------------------------------------------------------------
 
-  int val = sum/count;
-  if(val != 0){
+  int val = sum / count;
+  if (val != 0) {
     int sendVal = val;
     Serial.print("maVal : ");
     Serial.println(sendVal);
@@ -85,8 +85,8 @@ int maSensor(){
 void loop()
 {
   String s_sensor =  String(maSensor());
-   maSensor();
-  
+  maSensor();
+
   if (nrf24.available())
   {
     // Should be a message for us now
@@ -96,40 +96,33 @@ void loop()
     {
       //NRF24::printBuffer("request: ", buf, len);
       //Serial.print("got request: ");
-      
-      //Serial.println((char*)buf);
+
+      Serial.println((char*)buf);
 
       //char id = ((char)buf[1]);
 
-      //ถอด String id จาก sever ที่ส่งมา 
-      
+      //ถอด String id จาก sever ที่ส่งมา
+
       String id = char2String((char)buf[0]) + char2String((char)buf[1]);
       Serial.println(id);
-      
+
       if (char2String((char)buf[0]) == "A" &&  char2String((char)buf[1]) == "1") {
         char sensor_char[s_sensor.length() + 1];
         s_sensor.toCharArray(sensor_char, s_sensor.length() + 1);
         nrf24.send(sensor_char, sizeof(sensor_char));
         nrf24.waitPacketSent();
+        Serial.println(sensor_char);
         Serial.print("sensor : ");
         Serial.println(s_sensor);
         Serial.println("Yes I'am");
 
       } else {
-         Serial.println("fail");
+        Serial.println("fail");
       }
-
-      //String val = char2String((char)buf[4]) + char2String((char)buf[5]) + char2String((char)buf[6]);
-
-      // Send a reply
-      //uint8_t data[] = "And hello back to you";
-      //String id = id_sensor;
-      //nrf24.send(data, sizeof(data));
-      //Serial.println("Sent a reply");
     }
     else
     {
-
+      Serial.println("fail");
     }
   }
 }
